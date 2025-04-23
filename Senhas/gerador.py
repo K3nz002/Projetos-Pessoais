@@ -18,6 +18,7 @@ def senha_simbolos(comprimento):
 
 nivel_senha = input('Escolha os critérios da senha aleatória:\n1. Apenas letras\n2. Letras e números\n3. Letras, números e caracteres especiais\n')
 comprimento = int(input('Digite o comprimento da senha: '))
+
 match nivel_senha:
     case '1':
         print('A senha gerada é:', senha_letras(comprimento))

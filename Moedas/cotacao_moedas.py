@@ -2,19 +2,22 @@ import requests
 
 def cotacao_moedas():
     # API das cotações de moedas estrangeiras e bitcoin
-    cotacoes = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL')
+    cotacoes = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,JPY-BRL,CNY-BRL')
     lista_cotacoes = cotacoes.json()
     cotacao_dolar = float(lista_cotacoes['USDBRL']['bid'])
     cotacao_euro = float(lista_cotacoes['EURBRL']['bid'])
-    cotacao_btc = float(lista_cotacoes['BTCBRL']['bid'])
+    cotacao_iene = float(lista_cotacoes['JPYBRL']['bid'])
+    cotacao_yuan = float(lista_cotacoes['CNYBRL']['bid'])
 
-    print('Escolha uma moeda:\n1. Dólar\n2. Euro\n3. Bitcoin')
+    print('Escolha uma moeda:\n1. Dólar\n2. Euro\n3. Iene Japonês\n4. Yuan Chinês')
     moeda = int(input())
+
     match moeda:
 
         case 1:
             print('Escolha a operação que gostaria de fazer\n1. USD -> Real\n2. Real -> USD')
             operacao = int(input())
+
             match operacao:
 
                 case 1:
@@ -34,6 +37,7 @@ def cotacao_moedas():
         case 2:
             print('Escolha a operação que gostaria de fazer\n1. EUR -> Real\n2. Real -> EUR')
             operacao = int(input())
+
             match operacao:
 
                 case 1:
@@ -51,23 +55,48 @@ def cotacao_moedas():
                             break
 
         case 3:
-            print('Escolha a operação que gostaria de fazer\n1. BTC -> Real\n2. Real -> BTC')
+            print('Escolha a operação que gostaria de fazer\n1. JPY -> Real\n2. Real -> JPY')
             operacao = int(input())
+            
             match operacao:
 
                 case 1:
                     while True:
-                        valor_btc = float(input('Digite o valor em bitcoin: '))
-                        print(f'O valor de bitcoin para real é R${valor_btc * cotacao_btc}')
+                        valor_iene = float(input('Digite o valor em Iene: '))
+                        print(f'O valor de Iene para real é R${valor_iene * cotacao_iene}')
                         if valor_btc == 0:
                             break
 
                 case 2:
                     while True:
                         valor_real = float(input('Digite o valor em real: '))
-                        print(f'O valor de real para bitcoin é ₿{valor_real / cotacao_btc}')
+                        print(f'O valor de real para Iene é ¥{valor_real / cotacao_iene}')
                         if valor_real == 0:
                             break
 
-def grafico_variacao(moeda):
-    pass
+        case 4:
+            print('Escolha a operação que gostaria de fazer\n1. CNY -> Real\n2. Real -> CNY')
+            
+            operacao = int(input())
+
+            match operacao:
+
+                case 1:
+                    while True:
+                        valor_cny = float(input('Digite o valor em yuan chinês: '))
+                        print(f'O valor de yuan chinês para real é R${valor_cny * cotacao_yuan:.2f}')
+                        if valor_cnh == 0:
+                            break
+
+                case 2:
+                    while True:
+                        valor_real = float(input('Digite o valor em real: '))
+                        print(f'O valor de real para yuan chinês é ¥{valor_real / cotacao_yuan:.2f}')
+                        if valor_real == 0:
+                            break
+
+        case _:
+            print('Escolha inválida')
+
+# Execução do programa
+cotacao_moedas()
