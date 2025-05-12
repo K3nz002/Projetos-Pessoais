@@ -1,8 +1,8 @@
 # Projetos em Python
 
-### Projeto 1 - Moedas
+## Projeto 1 - Moedas
 
-**Cotação de Moedas**
+### Cotação de Moedas
 
 O projeto em um programa que utiliza uma API das cotação atual de uma moeda específica. O programa solicita ao usuário que insira o código da moeda desejada e, em seguida, exibe a cotação atual.
 
@@ -11,7 +11,7 @@ O projeto em um programa que utiliza uma API das cotação atual de uma moeda es
 - API de Cotação de Moedas
 - Requests
 
-**Gráfico de Cotação**
+### Gráfico de Cotação
 
 O projeto possui um programa que gera um gráfico de cotação de uma moeda específica ao longo do tempo. O programa solicita ao usuário que insira o código da moeda desejada e o intervalo de tempo desejado. Em seguida, o programa faz uma requisição à API de cotação de moedas e gera um gráfico com os dados obtidos.
 
@@ -22,9 +22,9 @@ O projeto possui um programa que gera um gráfico de cotação de uma moeda espe
 - Plotly
 - Pandas
 
-### Projeto 2 - Senhas
+## Projeto 2 - Senhas
 
-**Gerador de Senhas**
+### Gerador de Senhas
 
 O projeto possui um programa que gera senhas aleatórias com base em critérios definidos pelo usuário. O programa solicita ao usuário que insira o tamanho da senha desejada, se a senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais, e quantas senhas devem ser geradas. O programa então gera as senhas e as exibe na tela.
 
@@ -36,10 +36,21 @@ Proposta de funcionalidade:
 - Random
 - String
 
-**Validador de Senhas**
+### Validador de Senhas
 
 O projeto possui um programa que valida senhas fornecidas pelo usuário. O programa solicita ao usuário que insira uma senha e verifica se ela atende aos critérios de segurança definidos. O programa exibe uma mensagem indicando se a senha é segura ou não.
 
 **Tecnologias utilizadas:**
 - Python
 - String
+
+## Projeto 3 - Sistema Bancário
+
+### Sistema Bancário V1
+
+O projeto possui um programa que simula um sistema bancário simples. O programa permite que o usuário faça operações bancárias, como depósito, saque e extrato. O saque tem um limite de 3 saques diário de no máximo R$500,00. O programa exibe uma mensagem indicando se a operação foi realizada com sucesso ou não.
+
+**Tecnologias utilizadas:**
+- Python
+- Listas
+- Datetime

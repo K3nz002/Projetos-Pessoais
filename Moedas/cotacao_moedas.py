@@ -50,7 +50,7 @@ def cotacao_moedas():
                 case 2:
                     while True:
                         valor_real = float(input('Digite o valor em real: '))
-                        print(f'O valor de real para euro é €{valor_real / cotacao_euro:.2f}')
+                        print(f'O valor de real para euro é €{valor_real / cotacao_euro: .2f}')
                         if valor_real == 0:
                             break
 
@@ -63,14 +63,14 @@ def cotacao_moedas():
                 case 1:
                     while True:
                         valor_iene = float(input('Digite o valor em Iene: '))
-                        print(f'O valor de Iene para real é R${valor_iene * cotacao_iene}')
-                        if valor_btc == 0:
+                        print(f'O valor de Iene para real é R${valor_iene * cotacao_iene: .2f}')
+                        if valor_iene == 0:
                             break
 
                 case 2:
                     while True:
                         valor_real = float(input('Digite o valor em real: '))
-                        print(f'O valor de real para Iene é ¥{valor_real / cotacao_iene}')
+                        print(f'O valor de real para Iene é ¥{valor_real / cotacao_iene: .2f}')
                         if valor_real == 0:
                             break
 
@@ -84,14 +84,14 @@ def cotacao_moedas():
                 case 1:
                     while True:
                         valor_cny = float(input('Digite o valor em yuan chinês: '))
-                        print(f'O valor de yuan chinês para real é R${valor_cny * cotacao_yuan:.2f}')
+                        print(f'O valor de yuan chinês para real é R${valor_cny * cotacao_yuan: .2f}')
                         if valor_cnh == 0:
                             break
 
                 case 2:
                     while True:
                         valor_real = float(input('Digite o valor em real: '))
-                        print(f'O valor de real para yuan chinês é ¥{valor_real / cotacao_yuan:.2f}')
+                        print(f'O valor de real para yuan chinês é ¥{valor_real / cotacao_yuan: .2f}')
                         if valor_real == 0:
                             break
 
