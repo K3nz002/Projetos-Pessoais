@@ -28,6 +28,9 @@ O projeto possui um programa que gera um gráfico de cotação de uma moeda espe
 
 O projeto possui um programa que gera senhas aleatórias com base em critérios definidos pelo usuário. O programa solicita ao usuário que insira o tamanho da senha desejada, se a senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais, e quantas senhas devem ser geradas. O programa então gera as senhas e as exibe na tela.
 
+Proposta de funcionalidade:
+(O Usuário cria uma conta com nome de usuário e senha, o programa criptografa a senha transformando-a em uma hash e computa em um Banco de Dados. Ao fazer o login, o Usuário insere o nome de usuário e a senha, o programa transforma a senha inserida em hash, compara com a hash da conta computada no Banco e autoriza ou não a entrada na conta.)
+
 **Tecnologias utilizadas:**
 - Python
 - Random
