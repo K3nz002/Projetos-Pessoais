@@ -54,3 +54,13 @@ O projeto possui um programa que simula um sistema bancário simples. O programa
 - Python
 - Listas
 - Datetime
+
+### Sistema Bancário V2
+
+Melhoria da v1 adicionando funções de criar usuário e conta corrente
+
+**Tecnologias utilizadas:**
+- Python
+- Listas
+- Datetime
+- Dicionários
