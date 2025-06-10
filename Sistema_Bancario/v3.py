@@ -3,8 +3,8 @@ from datetime import datetime
 
 class Conta:
     def __init__ (self, saldo, numero, agencia, cliente, historico):
-        self._saldo = float(0)
-        self._numero = int(numero)
+        self._saldo == 0
+        self._numero = numero
         self._agencia = '0001'
         self._cliente = cliente
         self._historico = Historico()
@@ -34,11 +34,11 @@ class Conta:
         return self._historico
 
     def sacar(self, valor):
-        if self.saldo < valor:
+        if self._saldo < valor:
             print('Saldo insuficiente para saque.')
 
         elif valor > 0:
-            self.saldo -= valor
+            self._saldo -= valor
             print('Saque realizado com sucesso.')
             return True
 
@@ -49,7 +49,7 @@ class Conta:
 
     def depositar(self, valor):
         if valor > 0:
-            self.saldo += valor
+            self._saldo += valor
             print('Depósito realizado com sucesso.')
             return True
 
@@ -188,8 +188,8 @@ def main():
 
         elif opcao == 5:
             print('Criar conta')
-            criar_conta(numero_conta, clientes, contas)
-            numero_conta = len(contas) + 1
+            numero = len(contas) + 1
+            criar_conta(numero, clientes, contas)
 
         elif opcao == 6:
             print('Listar contas')
@@ -279,11 +279,11 @@ def criar_usuario(clientes):
         nome = nome,
         data_nascimento = data_nascimento
     )
-    clientes.append(clientes)
+    clientes.append(cliente)
 
     print('Usuário criado com sucesso!')
 
-def criar_conta(numero_conta, cliente, contas):
+def criar_conta(numero, clientes, contas):
     cpf = input('Informe o CPF do cliente: ')
     cliente = filtrar_cliente(cpf, clientes)
 
@@ -292,7 +292,7 @@ def criar_conta(numero_conta, cliente, contas):
         return
 
     conta = ContaCorrente(
-        numero_conta = numero_conta,
+        numero = numero,
         cliente = cliente
     )
 
@@ -307,7 +307,7 @@ def listar_contas(contas):
         print(str(conta))
 
 def filtrar_cliente(cpf, clientes):
-    clientes_filtrados = [cliente for cliente in clientes if cliente.cpf == cpf]
+    clientes_filtrados = [cliente for cliente in clientes if cliente._cpf == cpf]
     return clientes_filtrados[0] if clientes_filtrados else None
 
 def recuperar_conta_cliente(cliente):
