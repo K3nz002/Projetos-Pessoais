@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 
 class Conta:
-    def __init__ (self, saldo, numero, agencia, cliente, historico):
-        self._saldo == 0
+    def __init__ (self, numero, cliente):
+        self._saldo = 0
         self._numero = numero
         self._agencia = '0001'
         self._cliente = cliente
@@ -15,7 +15,7 @@ class Conta:
 
     @property
     def saldo(self):
-        return self.saldo
+        return self._saldo
 
     @property
     def numero(self):
@@ -59,14 +59,14 @@ class Conta:
         return False
     
 class ContaCorrente(Conta):
-    def __init__(self, saldo, numero, cliente, limite = 500, limite_saques_diarios = 3):
-        super().__init__(saldo, numero, cliente)
+    def __init__(self, numero, cliente, limite = 500, limite_saques_diarios = 3):
+        super().__init__(numero, cliente)
         self._limite = limite
         self._limite_saques_diarios = limite_saques_diarios
 
     def sacar(self, valor):
         numero_saques = len(
-            [transacao for transacao in self.historico.transacoes if transacao['tipo'] == Saque.__name__]
+            [transacao for transacao in self.historico.transacoes if transacao["Tipo"] == Saque.__name__]
         )
 
         if valor > self._limite:
@@ -115,9 +115,9 @@ class Historico:
 class PessoaFisica(Cliente):
     def __init__ (self, endereco, cpf, nome, data_nascimento):
         super().__init__(endereco)
-        self._cpf = cpf
-        self._nome = nome
-        self._data_nascimento = data_nascimento
+        self.cpf = cpf
+        self.nome = nome
+        self.data_nascimento = data_nascimento
     
 class Transacao(ABC):
     @property
@@ -208,13 +208,13 @@ def deposito(clientes):
         print('Cliente não encontrado!')
         return
 
-    valor = float(input('Digite o valor que deseja depositar:\n'))
-    transacao = Deposito(valor)
-
     conta = recuperar_conta_cliente(cliente)
     if not conta:
         print('Conta não encontrada!')
         return
+
+    valor = float(input('Digite o valor que deseja depositar:\n'))
+    transacao = Deposito(valor)
 
     cliente.realizar_transacao(conta, transacao)
 
@@ -224,15 +224,15 @@ def saque(clientes):
 
     if not cliente:
         print('Cliente não encontrado!')
-        return
-
-    valor = float(input('Digite o valor que deseja sacar:\n'))
-    transacao = Saque(valor)
+        return criar_usuario(clientes)
 
     conta = recuperar_conta_cliente(cliente)
     if not conta:
         print('Conta não encontrada!')
-        return
+        return criar_conta(numero, clientes, contas)
+
+    valor = float(input('Digite o valor que deseja sacar:\n'))
+    transacao = Saque(valor)
 
     cliente.realizar_transacao(conta, transacao)
 
@@ -242,12 +242,12 @@ def extrato(clientes):
 
     if not cliente:
         print('Cliente não encontrado!')
-        return
+        return criar_usuario(clientes)
 
     conta = recuperar_conta_cliente(cliente)
     if not conta:
         print('Conta não encontrada!')
-        return
+        return criar_conta(numero, clientes, contas)
 
     print('Extrato')
     transacoes = conta.historico.transacoes
@@ -257,7 +257,7 @@ def extrato(clientes):
         extrato = 'Não foram realizadas movimentações.'
     else:
         for transacao in transacoes:
-            extrato += f'{transacao["Tipo"]}:\n\tR$ {transacao["Valor"]:.2f}\n'
+            extrato += f'{transacao["Tipo"]}:\n\tR$ {transacao["Valor"]:.2f} | {transacao["Data"]}'
     print(extrato)
     print(f'\nSaldo:\n\tR$ {conta.saldo:.2f}')  
 
@@ -289,7 +289,7 @@ def criar_conta(numero, clientes, contas):
 
     if not cliente:
         print('Cliente não encontrado!')
-        return
+        return criar_usuario(clientes)
 
     conta = ContaCorrente(
         numero = numero,
@@ -303,20 +303,19 @@ def criar_conta(numero, clientes, contas):
 
 def listar_contas(contas):
     for conta in contas:
-        print('=' * 100)
         print(str(conta))
 
 def filtrar_cliente(cpf, clientes):
-    clientes_filtrados = [cliente for cliente in clientes if cliente._cpf == cpf]
+    clientes_filtrados = [cliente for cliente in clientes if cliente.cpf == cpf]
     return clientes_filtrados[0] if clientes_filtrados else None
 
 def recuperar_conta_cliente(cliente):
     if not cliente.contas:
         print('Cliente não possui conta!')
-        return
+        return criar_usuario(clientes)
 
     else:
         conta = int(input('Informe o número da conta: '))
-        return cliente.contas[conta]
+        return cliente.contas[conta - 1]
 
 main()
