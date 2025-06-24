@@ -145,12 +145,12 @@ Upgrade the V1 adding features to create a user and current acount.
 
 ### Banking System V3
 
-First contact with POO in Python apply in banking system conecting all features the V2.
+First contact with OOP in Python apply in banking system conecting all features the V2.
 
 **Tecnologies Used:**
 - Python
 - Listas
 - Datetime
 - Classes
-- POO
+- OOP
 - ABC (abstractmethod)
