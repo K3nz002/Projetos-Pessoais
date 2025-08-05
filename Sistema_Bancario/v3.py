@@ -1,6 +1,23 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 
+class ContasIterador:
+    def __init__ (self, contas):
+        self._contas = contas
+        self._indice = 0
+    
+    def __iter__ (self):
+        return self
+    
+    def __next__ (self):
+        try:
+            conta = self._contas[self._indice]
+            return f"Agência: {conta.agencia}\nConta: {conta.numero}\nTitular: {conta.cliente.nome}\nSaldo: {conta.saldo: .2f}\n"
+        except IndexError:
+            raise StopIteration
+        finally:
+            self._indice += 1
+
 class Conta:
     def __init__ (self, numero, cliente):
         self._saldo = 0
@@ -135,6 +152,11 @@ class Historico:
             }
         )
 
+    def relatorio(self, tipo_transacao= None):
+        for transacao in self._transacoes:
+            if tipo_transacao is None or transacao['Tipo'].lower() == tipo_transacao.lower():
+                yield transacao
+
 class PessoaFisica(Cliente):
     def __init__ (self, endereco, cpf, nome, data_nascimento):
         super().__init__(endereco)
@@ -175,6 +197,14 @@ class Deposito(Transacao):
     def registrar (self, conta):
         if conta.depositar(self.valor):
             conta.historico.adicionar_transacao(self)
+
+def log_transacao(func):
+    def envelope(*args, **kwargs):
+        resultado = func(*args, **kwargs)
+        print(f'{datetime.now().strftime("%d-%m-%Y | %H:%M:%S")}: {func.__name__}')
+        return resultado
+
+    return envelope
 
 def main():
     contas = [] 
@@ -223,6 +253,7 @@ def main():
         else:
             print('Operação inválida, selecione novamente a operação desejada.')
 
+@log_transacao
 def deposito(clientes):
     cpf = input('Informe o CPF do cliente:\n')
     if len(cpf)!= 11:
@@ -245,6 +276,7 @@ def deposito(clientes):
 
     cliente.realizar_transacao(conta, transacao)
 
+@log_transacao
 def saque(clientes):
     cpf = input('Informe o CPF do cliente:\n')
     if len(cpf)!= 11:
@@ -267,6 +299,7 @@ def saque(clientes):
 
     cliente.realizar_transacao(conta, transacao)
 
+@log_transacao
 def extrato(clientes):
     cpf = input('Informe o CPF do cliente:\n')
     if len(cpf)!= 11:
@@ -283,19 +316,34 @@ def extrato(clientes):
     if not conta:
         print('Conta não encontrada!')
         return criar_conta(numero, clientes, contas)
+    
+    tipo_transacao = input('Informe se deseja filtrar a visualização do extrato:\n[1] Depósito\n[2] Saque\n[3] Todas\n=> ')
+    match tipo_transacao:
+        case '1':
+            tipo_transacao = 'deposito'
+        case '2':
+            tipo_transacao = 'saque'
+        case '3':
+            tipo_transacao = None
+        case _:
+            print('Operação inválida!')
+            return extrato(clientes)
 
     print('Extrato')
-    transacoes = conta.historico.transacoes
 
     extrato = ''
-    if not transacoes:
-        extrato = 'Não foram realizadas movimentações.'
-    else:
-        for transacao in transacoes:
-            extrato += f'{transacao["Tipo"]}:\n\tR$ {transacao["Valor"]:.2f} | {transacao["Data"]}'
-    print(extrato)
-    print(f'\nSaldo:\n\tR$ {conta.saldo:.2f}')
+    houve_transacao = False
+    for transacao in conta.historico.relatorio(tipo_transacao):
+        houve_transacao = True
+        extrato += f'{transacao["Tipo"]}:\nR$ {transacao["Valor"]:.2f} | {transacao["Data"]}\n'
 
+    if not houve_transacao:
+        extrato = 'Não foram realizadas movimentações.'
+
+    print(extrato)
+    print(f'Saldo:\n\tR$ {conta.saldo:.2f}')
+
+@log_transacao
 def criar_usuario(clientes):
     cpf = input('Informe o CPF para criar o seu usuário (somente número):\n')
     if len(cpf) != 11:
@@ -325,6 +373,7 @@ def criar_usuario(clientes):
 
     print('Usuário criado com sucesso!')
 
+@log_transacao
 def criar_conta(numero, clientes, contas):
     cpf = input('Informe o CPF do cliente:\n')
     if len(cpf)!= 11:
@@ -334,7 +383,7 @@ def criar_conta(numero, clientes, contas):
 
     if not cliente:
         print('Cliente não encontrado!')
-        return criar_usuario(clientes)
+        return main()
 
     limite = int(input('Informe o valor de saque limite da conta:\n'))
     limite_saques_diarios = int(input('Informe o limite de saques diários:\n'))
@@ -360,7 +409,7 @@ def criar_conta(numero, clientes, contas):
     print(str(conta))
 
 def listar_contas(contas):
-    for conta in contas:
+    for conta in ContasIterador(contas):
         print(str(conta))
 
 def filtrar_cliente(cpf, clientes):
