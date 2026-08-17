@@ -1,0 +1,15 @@
+# Ambiente virtual
+venv/
+env/
+.env
+
+# Arquivos do Python
+__pycache__/
+*.pyc
+
+# Configurações de IDEs
+.vscode/
+.idea/
+
+# Estado local de deduplicação (não versionar)
+data/

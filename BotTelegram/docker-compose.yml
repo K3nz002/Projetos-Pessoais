@@ -1,0 +1,12 @@
+services:
+  bot:
+    build: .
+    container_name: telegram_bot
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      # Volume nomeado: seen_news.json sobrevive a rebuilds e reinicios
+      - bot_data:/app/data
+
+volumes:
+  bot_data:
